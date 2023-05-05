@@ -2,10 +2,10 @@ import { cn } from "@/lib/utils";
 import SessionProvider from "@/providers/session";
 import ToastContainer from "@/providers/toast";
 import TRPCProvider from "@/providers/trpc";
-import { sonoFont } from "@/styles/font";
+import { jetBrainsMonoFont } from "@/styles/font";
 import "@/styles/globals.css";
 import type { Metadata } from "next/types";
-import { type PropsWithChildren } from "react";
+import type { PropsWithChildren } from "react";
 import AppBar from "./AppBar";
 
 export const metadata: Metadata = {
@@ -18,7 +18,9 @@ export const runtime = "edge";
 function RootLayout({ children }: PropsWithChildren) {
 	return (
 		<html>
-			<body className={cn("bg-gray-800 text-white", sonoFont.className)}>
+			<body
+				className={cn("bg-gray-800 text-white", jetBrainsMonoFont.className)}
+			>
 				<ToastContainer
 					containerId="root"
 					closeOnClick={false}

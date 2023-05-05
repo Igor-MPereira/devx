@@ -1,5 +1,5 @@
 "use client";
-import { type NextErrorProps } from "@/types/next";
+import type {  NextErrorProps } from "@/types/next";
 
 function ErrorPage({ error, reset }: NextErrorProps) {
 	return (
