@@ -1,7 +1,6 @@
 "use client";
 
 import { type AppRouter } from "@/server/trpc";
-import { getBaseUrl } from "@/shared/url";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import {
@@ -12,6 +11,12 @@ import {
 } from "@trpc/react-query";
 import { useState, type PropsWithChildren } from "react";
 import SuperJSON from "superjson";
+
+function getBaseUrl() {
+	if (typeof window !== "undefined") return "";
+	if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
+	return `http://localhost:${process.env.PORT ?? 3000}`;
+}
 
 export const trpc = createTRPCReact<AppRouter>({
 	overrides: {

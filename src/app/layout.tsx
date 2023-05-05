@@ -4,7 +4,7 @@ import ToastContainer from "@/providers/toast";
 import TRPCProvider from "@/providers/trpc";
 import { sonoFont } from "@/styles/font";
 import "@/styles/globals.css";
-import { type Metadata } from "next/types";
+import type { Metadata } from "next/types";
 import { type PropsWithChildren } from "react";
 import AppBar from "./AppBar";
 
@@ -12,6 +12,8 @@ export const metadata: Metadata = {
 	title: "DevX Share - Share your code with your friends",
 	description: "DevX Share is a platform to share your code with your friends"
 };
+
+export const runtime = "edge";
 
 function RootLayout({ children }: PropsWithChildren) {
 	return (

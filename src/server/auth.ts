@@ -1,7 +1,8 @@
+import { env } from "@/env.mjs";
 import { prisma } from "@/server/db";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import { NextApiRequest, type GetServerSidePropsContext } from "next";
 import { getServerSession, type NextAuthOptions } from "next-auth";
+import GithubProvider from "next-auth/providers/github";
 
 /**
  * Options for NextAuth.js used to configure adapters, providers, callbacks, etc.
@@ -20,6 +21,10 @@ export const authOptions: NextAuthOptions = {
 	},
 	adapter: PrismaAdapter(prisma),
 	providers: [
+		GithubProvider({
+			clientId: env.GITHUB_ID,
+			clientSecret: env.GITHUB_SECRET
+		})
 		/**
 		 * ...add more providers here.
 		 *
