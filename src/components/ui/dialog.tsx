@@ -3,8 +3,10 @@
 import { cn } from "@/lib/utils";
 import type {
 	DialogContentProps,
+	DialogDescriptionProps,
 	DialogOverlayProps,
-	DialogPortalProps
+	DialogPortalProps,
+	DialogTitleProps
 } from "@radix-ui/react-dialog";
 import {
 	Close,
@@ -17,7 +19,7 @@ import {
 	Title
 } from "@radix-ui/react-dialog";
 import { X } from "lucide-react";
-import type { ComponentPropsWithoutRef, ElementRef, HTMLAttributes } from "react";
+import type { ElementRef, HTMLAttributes } from "react";
 import { forwardRef } from "react";
 
 const DialogPortal = ({ className, children, ...props }: DialogPortalProps) => (
@@ -49,7 +51,10 @@ const DialogOverlay = forwardRef<DialogOverlayRef, DialogOverlayProps>(
 
 DialogOverlay.displayName = Overlay.displayName;
 
-const DialogContent = forwardRef<ElementRef<typeof Content>, DialogContentProps>(
+type TContent = typeof Content;
+export type DialogContentRef = ElementRef<TContent>;
+
+const DialogContent = forwardRef<DialogContentRef, DialogContentProps>(
 	({ className, children, ...props }, ref) => (
 		<DialogPortal>
 			<DialogOverlay />
@@ -70,6 +75,7 @@ const DialogContent = forwardRef<ElementRef<typeof Content>, DialogContentProps>
 		</DialogPortal>
 	)
 );
+
 DialogContent.displayName = Content.displayName;
 
 const DialogHeader = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) => (
@@ -78,6 +84,7 @@ const DialogHeader = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) =
 		{...props}
 	/>
 );
+
 DialogHeader.displayName = "DialogHeader";
 
 const DialogFooter = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) => (
@@ -89,30 +96,37 @@ const DialogFooter = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) =
 		{...props}
 	/>
 );
+
 DialogFooter.displayName = "DialogFooter";
 
-const DialogTitle = forwardRef<
-	ElementRef<typeof Title>,
-	ComponentPropsWithoutRef<typeof Title>
->(({ className, ...props }, ref) => (
-	<Title
-		ref={ref}
-		className={cn("text-lg font-semibold leading-none tracking-tight", className)}
-		{...props}
-	/>
-));
+type TTitle = typeof Title;
+export type DialogTitleRef = ElementRef<TTitle>;
+
+const DialogTitle = forwardRef<DialogTitleRef, DialogTitleProps>(
+	({ className, ...props }, ref) => (
+		<Title
+			ref={ref}
+			className={cn("text-lg font-semibold leading-none tracking-tight", className)}
+			{...props}
+		/>
+	)
+);
+
 DialogTitle.displayName = Title.displayName;
 
-const DialogDescription = forwardRef<
-	ElementRef<typeof Description>,
-	ComponentPropsWithoutRef<typeof Description>
->(({ className, ...props }, ref) => (
-	<Description
-		ref={ref}
-		className={cn("text-sm text-muted-foreground", className)}
-		{...props}
-	/>
-));
+type TDescription = typeof Description;
+export type DialogDescriptionRef = ElementRef<TDescription>;
+
+const DialogDescription = forwardRef<DialogDescriptionRef, DialogDescriptionProps>(
+	({ className, ...props }, ref) => (
+		<Description
+			ref={ref}
+			className={cn("text-sm text-muted-foreground", className)}
+			{...props}
+		/>
+	)
+);
+
 DialogDescription.displayName = Description.displayName;
 
 export {
