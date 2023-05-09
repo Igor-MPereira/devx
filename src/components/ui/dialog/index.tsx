@@ -19,8 +19,14 @@ import {
 	Title
 } from "@radix-ui/react-dialog";
 import { X } from "lucide-react";
-import type { ElementRef, HTMLAttributes } from "react";
+import type { HTMLAttributes } from "react";
 import { forwardRef } from "react";
+import type {
+	DialogContentRef,
+	DialogDescriptionRef,
+	DialogOverlayRef,
+	DialogTitleRef
+} from "./types";
 
 const DialogPortal = ({ className, children, ...props }: DialogPortalProps) => (
 	<Portal className={cn(className)} {...props}>
@@ -31,10 +37,6 @@ const DialogPortal = ({ className, children, ...props }: DialogPortalProps) => (
 );
 
 DialogPortal.displayName = Portal.displayName;
-
-type TOverlay = typeof Overlay;
-
-export type DialogOverlayRef = ElementRef<TOverlay>;
 
 const DialogOverlay = forwardRef<DialogOverlayRef, DialogOverlayProps>(
 	({ className, ...props }, ref) => (
@@ -50,9 +52,6 @@ const DialogOverlay = forwardRef<DialogOverlayRef, DialogOverlayProps>(
 );
 
 DialogOverlay.displayName = Overlay.displayName;
-
-type TContent = typeof Content;
-export type DialogContentRef = ElementRef<TContent>;
 
 const DialogContent = forwardRef<DialogContentRef, DialogContentProps>(
 	({ className, children, ...props }, ref) => (
@@ -99,9 +98,6 @@ const DialogFooter = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) =
 
 DialogFooter.displayName = "DialogFooter";
 
-type TTitle = typeof Title;
-export type DialogTitleRef = ElementRef<TTitle>;
-
 const DialogTitle = forwardRef<DialogTitleRef, DialogTitleProps>(
 	({ className, ...props }, ref) => (
 		<Title
@@ -113,9 +109,6 @@ const DialogTitle = forwardRef<DialogTitleRef, DialogTitleProps>(
 );
 
 DialogTitle.displayName = Title.displayName;
-
-type TDescription = typeof Description;
-export type DialogDescriptionRef = ElementRef<TDescription>;
 
 const DialogDescription = forwardRef<DialogDescriptionRef, DialogDescriptionProps>(
 	({ className, ...props }, ref) => (
@@ -129,6 +122,7 @@ const DialogDescription = forwardRef<DialogDescriptionRef, DialogDescriptionProp
 
 DialogDescription.displayName = Description.displayName;
 
+export type * from "./types";
 export {
 	Dialog,
 	DialogTrigger,

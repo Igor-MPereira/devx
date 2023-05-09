@@ -3,18 +3,38 @@
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 import type { DialogProps } from "@radix-ui/react-dialog";
-import { Command as CommandPrimitive } from "cmdk";
+import {
+	Command as Cmdk,
+	CommandEmpty as CmdkEmpty,
+	CommandGroup as CmdkGroup,
+	CommandInput as CmdkInput,
+	CommandItem as CmdkItem,
+	CommandList as CmdkList,
+	CommandSeparator as CmdkSeparator
+} from "cmdk";
 import { Search } from "lucide-react";
-import type { ComponentPropsWithoutRef, ElementRef, HTMLAttributes } from "react";
+import type { HTMLAttributes } from "react";
 import { forwardRef } from "react";
-
-type TCommand = typeof CommandPrimitive;
-
-export type CommandRef = ElementRef<TCommand>;
-export type CommandProps = ComponentPropsWithoutRef<TCommand>;
+import type {
+	CommandEmptyProps,
+	CommandEmptyRef,
+	CommandGroupProps,
+	CommandGroupRef,
+	CommandInputProps,
+	CommandInputRef,
+	CommandItemProps,
+	CommandItemRef,
+	CommandListProps,
+	CommandListRef,
+	CommandProps,
+	CommandRef,
+	CommandSeparatorProps,
+	CommandSeparatorRef,
+	CommandShortcutProps
+} from "./types";
 
 const Command = forwardRef<CommandRef, CommandProps>(({ className, ...props }, ref) => (
-	<CommandPrimitive
+	<Cmdk
 		ref={ref}
 		className={cn(
 			"flex h-full w-full flex-col overflow-hidden rounded-md bg-popover text-popover-foreground",
@@ -24,7 +44,7 @@ const Command = forwardRef<CommandRef, CommandProps>(({ className, ...props }, r
 	/>
 ));
 
-Command.displayName = CommandPrimitive.displayName;
+Command.displayName = Cmdk.displayName;
 
 const CommandDialog = ({
 	children,
@@ -32,21 +52,18 @@ const CommandDialog = ({
 }: DialogProps & HTMLAttributes<HTMLDivElement>) => (
 	<Dialog {...props}>
 		<DialogContent className="overflow-hidden p-0 shadow-2xl">
-			<Command className="[&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-muted-foreground [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-2 [&_[cmdk-input-wrapper]_svg]:h-5 [&_[cmdk-input-wrapper]_svg]:w-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:h-5 [&_[cmdk-item]_svg]:w-5">
+			<Cmdk className="[&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-muted-foreground [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-2 [&_[cmdk-input-wrapper]_svg]:h-5 [&_[cmdk-input-wrapper]_svg]:w-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:h-5 [&_[cmdk-item]_svg]:w-5">
 				{children}
-			</Command>
+			</Cmdk>
 		</DialogContent>
 	</Dialog>
 );
-
-export type CommandInputRef = ElementRef<TCommand["Input"]>;
-export type CommandInputProps = ComponentPropsWithoutRef<TCommand["Input"]>;
 
 const CommandInput = forwardRef<CommandInputRef, CommandInputProps>(
 	({ className, ...props }, ref) => (
 		<div className="flex items-center border-b px-3" cmdk-input-wrapper="">
 			<Search className="mr-2 h-4 w-4 shrink-0 opacity-50" />
-			<CommandPrimitive.Input
+			<CmdkInput
 				ref={ref}
 				className={cn(
 					"placeholder:text-foreground-muted flex h-11 w-full rounded-md bg-transparent py-3 text-sm outline-none disabled:cursor-not-allowed disabled:opacity-50",
@@ -58,14 +75,11 @@ const CommandInput = forwardRef<CommandInputRef, CommandInputProps>(
 	)
 );
 
-CommandInput.displayName = CommandPrimitive.Input.displayName;
-
-export type CommandListRef = ElementRef<TCommand["List"]>;
-export type CommandListProps = ComponentPropsWithoutRef<TCommand["List"]>;
+CommandInput.displayName = CmdkInput.displayName;
 
 const CommandList = forwardRef<CommandListRef, CommandListProps>(
 	({ className, ...props }, ref) => (
-		<CommandPrimitive.List
+		<CmdkList
 			ref={ref}
 			className={cn("max-h-[300px] overflow-y-auto overflow-x-hidden", className)}
 			{...props}
@@ -73,23 +87,17 @@ const CommandList = forwardRef<CommandListRef, CommandListProps>(
 	)
 );
 
-CommandList.displayName = CommandPrimitive.List.displayName;
-
-export type CommandEmptyRef = ElementRef<TCommand["Empty"]>;
-export type CommandEmptyProps = ComponentPropsWithoutRef<TCommand["Empty"]>;
+CommandList.displayName = CmdkList.displayName;
 
 const CommandEmpty = forwardRef<CommandEmptyRef, CommandEmptyProps>((props, ref) => (
-	<CommandPrimitive.Empty ref={ref} className="py-6 text-center text-sm" {...props} />
+	<CmdkEmpty ref={ref} className="py-6 text-center text-sm" {...props} />
 ));
 
-CommandEmpty.displayName = CommandPrimitive.Empty.displayName;
-
-export type CommandGroupRef = ElementRef<TCommand["Group"]>;
-export type CommandGroupProps = ComponentPropsWithoutRef<TCommand["Group"]>;
+CommandEmpty.displayName = CmdkEmpty.displayName;
 
 const CommandGroup = forwardRef<CommandGroupRef, CommandGroupProps>(
 	({ className, ...props }, ref) => (
-		<CommandPrimitive.Group
+		<CmdkGroup
 			ref={ref}
 			className={cn(
 				"overflow-hidden p-1 text-foreground [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:py-1.5 [&_[cmdk-group-heading]]:text-xs [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-muted-foreground",
@@ -100,14 +108,11 @@ const CommandGroup = forwardRef<CommandGroupRef, CommandGroupProps>(
 	)
 );
 
-CommandGroup.displayName = CommandPrimitive.Group.displayName;
-
-export type CommandSeparatorRef = ElementRef<TCommand["Separator"]>;
-export type CommandSeparatorProps = ComponentPropsWithoutRef<TCommand["Separator"]>;
+CommandGroup.displayName = CmdkGroup.displayName;
 
 const CommandSeparator = forwardRef<CommandSeparatorRef, CommandSeparatorProps>(
 	({ className, ...props }, ref) => (
-		<CommandPrimitive.Separator
+		<CmdkSeparator
 			ref={ref}
 			className={cn("-mx-1 h-px bg-border", className)}
 			{...props}
@@ -115,14 +120,11 @@ const CommandSeparator = forwardRef<CommandSeparatorRef, CommandSeparatorProps>(
 	)
 );
 
-CommandSeparator.displayName = CommandPrimitive.Separator.displayName;
-
-export type CommandItemRef = ElementRef<TCommand["Item"]>;
-export type CommandItemProps = ComponentPropsWithoutRef<TCommand["Item"]>;
+CommandSeparator.displayName = CmdkSeparator.displayName;
 
 const CommandItem = forwardRef<CommandItemRef, CommandItemProps>(
 	({ className, ...props }, ref) => (
-		<CommandPrimitive.Item
+		<CmdkItem
 			ref={ref}
 			className={cn(
 				"relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none aria-selected:bg-accent aria-selected:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
@@ -133,9 +135,7 @@ const CommandItem = forwardRef<CommandItemRef, CommandItemProps>(
 	)
 );
 
-CommandItem.displayName = CommandPrimitive.Item.displayName;
-
-export type CommandShortcutProps = HTMLAttributes<HTMLSpanElement>;
+CommandItem.displayName = CmdkItem.displayName;
 
 const CommandShortcut = ({ className, ...props }: CommandShortcutProps) => (
 	<span
@@ -146,6 +146,7 @@ const CommandShortcut = ({ className, ...props }: CommandShortcutProps) => (
 
 CommandShortcut.displayName = "CommandShortcut";
 
+export type * from "./types";
 export {
 	Command,
 	CommandDialog,
@@ -157,3 +158,5 @@ export {
 	CommandShortcut,
 	CommandSeparator
 };
+
+
