@@ -5,10 +5,10 @@ function GlobalErrorPage({ error, reset }: NextErrorProps) {
 	return (
 		<div className="max-w-lg">
 			<p>
-				<b>A aplicação parou de funcionar!</b>
+				<b>The application crashed!</b>
 			</p>
 			<pre>{error.message}</pre>
-			<button onClick={reset}>Tentar novamente.</button>
+			<button onClick={reset}>Try agaain.</button>
 		</div>
 	);
 }

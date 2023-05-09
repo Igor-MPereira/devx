@@ -36,7 +36,7 @@ function Home() {
 						className="rounded-md p-2 outline outline-1 outline-white hover:bg-gray-700"
 						onClick={signInWithGithub}
 					>
-						Entrar
+						Sign In
 					</button>
 				)}
 			</div>
